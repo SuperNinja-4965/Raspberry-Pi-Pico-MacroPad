@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Joshua Glass (SuperNinja_4965)
+ * Copyright (c) 2022 SuperNinja_4965
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,15 +49,15 @@ uint16_t last_button_states = 0;
 // MACRO CONSTANT TYPEDEF PROTYPES
 //--------------------------------------------------------------------+
 /* Blink pattern
-* - 250 ms  : device not mounted
-* - 1000 ms : device mounted
-* - 2500 ms : device is suspended
-*/
+ * - 250 ms  : device not mounted
+ * - 1000 ms : device mounted
+ * - 2500 ms : device is suspended
+ */
 enum
 {
-    BLINK_NOT_MOUNTED = 250,
-    BLINK_MOUNTED = 1000,
-    BLINK_SUSPENDED = 2500,
+  BLINK_NOT_MOUNTED = 250,
+  BLINK_MOUNTED = 1000,
+  BLINK_SUSPENDED = 2500,
 };
 static uint32_t blink_interval_ms = BLINK_NOT_MOUNTED;
 

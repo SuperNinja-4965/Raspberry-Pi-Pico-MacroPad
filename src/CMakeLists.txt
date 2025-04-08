@@ -1,6 +1,6 @@
 #  The MIT License (MIT)
 #
-#  Copyright (c) 2022 Joshua Glass (SuperNinja_4965)
+#  Copyright (c) 2022 SuperNinja_4965
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
@@ -44,4 +44,4 @@ if (TARGET tinyusb_device)
 elseif(PICO_ON_DEVICE)
     message(WARNING "Not building Pico-MacroPad because TinyUSB submodule is not initialized in the SDK")
 endif()
- 
+

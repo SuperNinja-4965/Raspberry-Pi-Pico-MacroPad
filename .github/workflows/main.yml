@@ -1,6 +1,6 @@
 #  The MIT License (MIT)
 #
-#  Copyright (c) 2022 Joshua Glass (SuperNinja_4965)
+#  Copyright (c) 2022 SuperNinja_4965
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,15 @@
 
 name: Compile and CodeQL
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: "0 0 1 * *"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'cpp' ]
+        language: ["cpp"]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
@@ -58,16 +58,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Install Dependencies 
-      - name: Install Dependencies 
+      # Install Dependencies
+      - name: Install Dependencies
         run: |
           sudo apt update
           sudo apt install git cmake gcc-arm-none-eabi gcc g++ gdb-multiarch automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev minicom openocd
-          
+
       # Get the core count so we can use more than one core for compile
       - name: Get core count
         id: core_count
-        run : cat /proc/cpuinfo  | grep processor | wc -l
+        run: cat /proc/cpuinfo  | grep processor | wc -l
 
       # Setup the SDK
       - name: Setup the SDK
@@ -75,7 +75,7 @@ jobs:
           mkdir ${GITHUB_WORKSPACE}/pico/
           git -C ${GITHUB_WORKSPACE}/pico/ clone https://github.com/raspberrypi/pico-sdk.git
           git -C ${GITHUB_WORKSPACE}/pico/pico-sdk submodule update --init --recursive
-          
+
       # Run the SDK tests - Helps ensure the SDK and our environemnt is good.
       - name: Run SDK Test runs
         run: |
@@ -89,16 +89,16 @@ jobs:
         run: |
           git clone https://github.com/pimoroni/pimoroni-pico.git ${GITHUB_WORKSPACE}/libs/pimoroni-pico
           git -C ${GITHUB_WORKSPACE}/libs/pimoroni-pico submodule update --init --recursive
-          
+
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-          
+
       # Builds the code
       - name: Build the Code
-        run: |  
+        run: |
           export PICO_SDK_PATH="${GITHUB_WORKSPACE}/pico/pico-sdk"
           mkdir build
           cd build
@@ -106,13 +106,13 @@ jobs:
           make -j ${{steps.core_count.outputs.output}}
           rm -r ${GITHUB_WORKSPACE}/pico/
           rm -r ${GITHUB_WORKSPACE}/libs/
-          
+
       # Upload the artifact
       - uses: actions/upload-artifact@v3
         with:
           name: UF2-Compiled-Binary.uf2
           path: ./build/examples/Simple/SimpleExample.uf2
           retention-days: 60
-          
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2

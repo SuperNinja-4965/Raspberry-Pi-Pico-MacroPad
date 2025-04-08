@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Joshua Glass (SuperNinja_4965)
+ * Copyright (c) 2022 SuperNinja_4965
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,23 +45,23 @@
 
 #define REPORT_ID_TINYPICO 4
 
-class RGBMacroPad {
-    public:
-        // Variable to define if we are blinking the led or not.
-        bool UseBlinking = false;
-        // Variable to store the Dim LED duration
-        int DimLedDuration = 300000;
-        // Define our shared functions
-        void SetupButton(uint8_t ButtonNum, uint8_t r, uint8_t g, uint8_t b, uint8_t KeyCode, uint8_t ModifierKeys, uint8_t KeyboardType);
-        void RemoveButtonSetup(int ButtonNum);
-        void InitializeDevice();
-        void Loop(void);
-        void SendKeypress(uint8_t report_id, uint8_t KeyCode, uint8_t Modifiers);
+class RGBMacroPad
+{
+public:
+    // Variable to define if we are blinking the led or not.
+    bool UseBlinking = false;
+    // Variable to store the Dim LED duration
+    int DimLedDuration = 300000;
+    // Define our shared functions
+    void SetupButton(uint8_t ButtonNum, uint8_t r, uint8_t g, uint8_t b, uint8_t KeyCode, uint8_t ModifierKeys, uint8_t KeyboardType);
+    void RemoveButtonSetup(int ButtonNum);
+    void InitializeDevice();
+    void Loop(void);
+    void SendKeypress(uint8_t report_id, uint8_t KeyCode, uint8_t Modifiers);
 
-    private:
-        static int64_t ResetLEDsRepeat(alarm_id_t id, void *user_data);
-        static bool DimLEDTimer(struct repeating_timer *t);
-
+private:
+    static int64_t ResetLEDsRepeat(alarm_id_t id, void *user_data);
+    static bool DimLEDTimer(struct repeating_timer *t);
 };
 
 #endif
