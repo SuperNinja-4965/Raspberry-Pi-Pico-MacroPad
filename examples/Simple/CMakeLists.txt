@@ -21,7 +21,7 @@
 #  THE SOFTWARE.
 #
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.13)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -38,7 +38,7 @@ if (TARGET tinyusb_device)
 
   # Set the Pico program information
   pico_set_program_name(SimpleExample "Raspberry Pi Pico MacroPad")
-  pico_set_program_version(SimpleExample "2023-02-1")
+  pico_set_program_version(SimpleExample "2026-03-29")
 
   # Pull in pico libraries that we need
   target_link_libraries(SimpleExample PUBLIC pico_stdlib RGBMacroPad)
