@@ -56,13 +56,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       # Install Dependencies
       - name: Install Dependencies
         run: |
           sudo apt update
-          sudo apt install git cmake gcc-arm-none-eabi gcc g++ gdb-multiarch automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev minicom openocd
+          sudo apt install -y git cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib build-essential
 
       # Get the core count so we can use more than one core for compile
       - name: Get core count
@@ -92,7 +92,7 @@ jobs:
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
 
@@ -108,11 +108,11 @@ jobs:
           rm -r ${GITHUB_WORKSPACE}/libs/
 
       # Upload the artifact
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v6
         with:
           name: UF2-Compiled-Binary.uf2
           path: ./build/examples/Simple/SimpleExample.uf2
           retention-days: 60
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v4
